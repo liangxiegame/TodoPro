@@ -96,7 +96,7 @@ namespace TodoProApp
                             leading: new Icon(Icons.calendar_today),
                             title: new Text("Due Date"),
                             trailing: new DropdownButton<string>(
-                                value: mDueDate.ToString(),
+                                value: mDueDate.ToText(),
                                 onChanged: newValue =>
                                 {
                                     setState(() =>

@@ -37,6 +37,14 @@ namespace TodoProApp
                                     }
                                 ),
                                 new ListTile(
+                                    leading: new Icon(Icons.today),
+                                    title: new Text("一周内"),
+                                    onTap: () =>
+                                    {
+                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByWeek()));
+                                    }
+                                ),
+                                new ListTile(
                                     leading: new Icon(Icons.done),
                                     title: new Text("已完成"),
                                     onTap: () =>

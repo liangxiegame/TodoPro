@@ -53,6 +53,12 @@ namespace TodoProApp
                     .Where(todo => todo.DueDate == DueDate.Today &&
                                    todo.Status == TodoStatus.Pending)
                     .ToList();
+            } else if (filter.FilterType == FilterType.ByWeek)
+            {
+                Todos = todos
+                    .Where(todo => todo.DueDate == DueDate.Next7Day &&
+                                   todo.Status == TodoStatus.Pending)
+                    .ToList();
             }
         }
     }

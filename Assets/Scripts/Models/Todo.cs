@@ -26,10 +26,12 @@ namespace TodoProApp
             {
                 return "Today";
             }
-            else
+            else if (dueDate == DueDate.Next7Day)
             {
                 return "Next 7 Day";
             }
+
+            return "";
         }
     }
     

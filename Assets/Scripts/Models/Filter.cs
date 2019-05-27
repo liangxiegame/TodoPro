@@ -4,7 +4,8 @@ namespace TodoProApp
     public enum FilterType
     {
         ByStatus,
-        ByToday
+        ByToday,
+        ByWeek
     }
 
     public static class TodoStatusToTitle
@@ -46,6 +47,16 @@ namespace TodoProApp
                 Title = "今天",
                 TodoStatus = TodoStatus.Pending,
                 FilterType = FilterType.ByToday
+            };
+        }
+        
+        public static Filter ByWeek()
+        {
+            return new Filter()
+            {
+                Title = "一周内",
+                TodoStatus = TodoStatus.Pending,
+                FilterType = FilterType.ByWeek
             };
         }
 
