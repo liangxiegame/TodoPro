@@ -18,6 +18,8 @@ namespace TodoProApp
                 case ApplyFilterAction applyFilterAction:
                     state.Filter = applyFilterAction.Filter;
                     return state;
+                case UpdateTodoAction _:
+                    return state;
             }
 
             return state;

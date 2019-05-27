@@ -23,8 +23,17 @@ namespace TodoProApp
                                     title: new Text("收件箱"),
                                     onTap: () =>
                                     {
-                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByInbox()));
+                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByStatus(TodoStatus.Pending)));
                                         Debug.Log("收件箱");
+                                    }
+                                ),
+                                new ListTile(
+                                    leading: new Icon(Icons.today),
+                                    title: new Text("今天"),
+                                    onTap: () =>
+                                    {
+                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByToday()));
+                                        Debug.Log("今天");
                                     }
                                 ),
                                 new ListTile(
@@ -33,7 +42,7 @@ namespace TodoProApp
                                     onTap: () =>
                                     {
                                         Debug.Log("已完成");
-                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByFinished()));
+                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByStatus(TodoStatus.Completed)));
                                     }
                                 )
                             }

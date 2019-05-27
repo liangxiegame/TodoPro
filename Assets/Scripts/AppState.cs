@@ -7,6 +7,6 @@ namespace TodoProApp
     {
         public List<Todo> Todos = new List<Todo>();
         
-        public Filter Filter = Filter.ByInbox();
+        public Filter Filter = Filter.ByStatus(TodoStatus.Pending);
     }
 }

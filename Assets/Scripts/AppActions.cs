@@ -11,6 +11,18 @@ namespace TodoProApp
         
     }
 
+    
+    public class UpdateTodoAction
+    {
+        public UpdateTodoAction(Todo todo)
+        {
+            Todo = todo;
+        }
+
+        public Todo Todo { get; }
+        
+    }
+    
     public class CompleteTodoAction
     {
         public CompleteTodoAction(Todo todo)
