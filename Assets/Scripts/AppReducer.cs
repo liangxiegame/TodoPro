@@ -15,6 +15,9 @@ namespace TodoProApp
                 case RemoveTodoAction removeTodoAction:
                     state.Todos.Remove(removeTodoAction.Todo);
                     return state;
+                case ApplyFilterAction applyFilterAction:
+                    state.Filter = applyFilterAction.Filter;
+                    return state;
             }
 
             return state;
