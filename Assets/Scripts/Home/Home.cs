@@ -17,7 +17,15 @@ namespace TodoProApp
                     converter:state => state.Todos,
                     builder:(buildContext, model, dispatcher) =>
                     {
-                        return new Text(model.Count.ToString());
+                        return ListView.builder(
+                            itemCount:model.Count,
+                            itemBuilder:((context1, index) =>
+                            {
+                                var todo = model[index];
+                                return new ListTile(title: new Text(todo.Title));
+                            })
+                            
+                            );
                     }
                     ),
                 floatingActionButton: new FloatingActionButton(
