@@ -10,4 +10,14 @@ namespace TodoProApp
         public Todo Todo { get; }
         
     }
+
+    public class RemoveTodoAction
+    {
+        public Todo Todo { get; }
+
+        public RemoveTodoAction(Todo todo)
+        {
+            this.Todo = todo;
+        }
+    }
 }

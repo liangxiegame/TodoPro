@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.UIWidgets.material;
 using Unity.UIWidgets.Redux;
 using Unity.UIWidgets.widgets;
+using UnityEngine;
 
 namespace TodoProApp
 {
@@ -15,19 +16,38 @@ namespace TodoProApp
                 ),
                 body:new StoreConnector<AppState,List<Todo>>(
                     converter:state => state.Todos,
-                    builder:(buildContext, model, dispatcher) =>
+                    builder: (buildContext, model, dispatcher) =>
                     {
                         return ListView.builder(
-                            itemCount:model.Count,
-                            itemBuilder:((context1, index) =>
+                            itemCount: model.Count,
+                            itemBuilder: (context1, index) =>
                             {
                                 var todo = model[index];
-                                return new ListTile(title: new Text(todo.Title));
-                            })
-                            
-                            );
+                                return new Dismissible(
+                                    child: new ListTile(title: new Text(todo.Title)),
+                                    background: new Container(
+                                        color: Colors.red,
+                                        child: new ListTile(
+                                            leading: new Icon(
+                                                icon: Icons.delete,
+                                                color: Colors.white
+                                            )
+                                        )
+                                    ),
+                                    onDismissed:direction =>
+                                    {
+                                        if (direction == DismissDirection.startToEnd)
+                                        {
+                                            dispatcher.dispatch(new RemoveTodoAction(todo));
+                                        }
+                                    }
+                                );
+
+                            }
+
+                        );
                     }
-                    ),
+                ),
                 floatingActionButton: new FloatingActionButton(
                     child: new Icon(
                         icon: Icons.add
