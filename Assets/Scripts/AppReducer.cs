@@ -9,11 +9,14 @@ namespace TodoProApp
                 case AddTodoAction addTodoAction:
                     state.Todos.Add(addTodoAction.Todo);
                     return state;
+                case CompleteTodoAction completeTodoAction:
+                    completeTodoAction.Todo.Status = TodoStatus.Completed;
+                    return state;
                 case RemoveTodoAction removeTodoAction:
                     state.Todos.Remove(removeTodoAction.Todo);
                     return state;
             }
-            
+
             return state;
         }
     }
