@@ -20,6 +20,10 @@ namespace TodoProApp
                     return state;
                 case UpdateTodoAction _:
                     return state;
+                
+                case AddLabelAction addLabelAction:
+                    state.Labels.Add(addLabelAction.Label);
+                    return state;
             }
 
             return state;

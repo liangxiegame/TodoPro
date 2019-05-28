@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace TodoProApp
 {
@@ -44,5 +45,7 @@ namespace TodoProApp
         public TodoStatus Status = TodoStatus.Pending;
 
         public DueDate DueDate;
+        
+        public List<string> Labels = new List<string>();
     }
 }

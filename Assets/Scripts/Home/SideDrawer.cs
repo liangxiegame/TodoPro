@@ -24,7 +24,7 @@ namespace TodoProApp
                                     onTap: () =>
                                     {
                                         dispatcher.dispatch(new ApplyFilterAction(Filter.ByStatus(TodoStatus.Pending)));
-                                        Debug.Log("收件箱");
+                                        Navigator.pop(context);
                                     }
                                 ),
                                 new ListTile(
@@ -33,7 +33,7 @@ namespace TodoProApp
                                     onTap: () =>
                                     {
                                         dispatcher.dispatch(new ApplyFilterAction(Filter.ByToday()));
-                                        Debug.Log("今天");
+                                        Navigator.pop(context);
                                     }
                                 ),
                                 new ListTile(
@@ -42,15 +42,18 @@ namespace TodoProApp
                                     onTap: () =>
                                     {
                                         dispatcher.dispatch(new ApplyFilterAction(Filter.ByWeek()));
+                                        Navigator.pop(context);
                                     }
                                 ),
+                                new LabelDrawerItem(),
                                 new ListTile(
                                     leading: new Icon(Icons.done),
                                     title: new Text("已完成"),
                                     onTap: () =>
                                     {
-                                        Debug.Log("已完成");
-                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByStatus(TodoStatus.Completed)));
+                                        dispatcher.dispatch(
+                                            new ApplyFilterAction(Filter.ByStatus(TodoStatus.Completed)));
+                                        Navigator.pop(context);
                                     }
                                 )
                             }

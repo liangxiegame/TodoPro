@@ -54,4 +54,15 @@ namespace TodoProApp
 
         public Filter Filter { get; }
     }
+
+    public class AddLabelAction
+    {
+        public AddLabelAction(Label label)
+        {
+            Label = label;
+        }
+
+        public Label Label { get; }
+    }
+    
 }

@@ -12,7 +12,7 @@ namespace TodoProApp
         public override Widget build(BuildContext context)
         {
             return new StoreConnector<AppState, TodosViewModel>(
-                converter: state => new TodosViewModel(state.Filter, state.Todos),
+                converter: state => new TodosViewModel(state.Filter, state.Todos,state.Labels),
                 builder: (buildContext, model, dispatcher) =>
                 {
                     return ListView.builder(
@@ -20,7 +20,7 @@ namespace TodoProApp
                         itemBuilder: (context1, index) =>
                         {
                             var todo = model.Todos[index];
-                            return new TodoWidget(todo,dispatcher);
+                            return new TodoWidget(todo,dispatcher,model.Labels);
                         });
                 }
             );
@@ -31,10 +31,13 @@ namespace TodoProApp
     class TodosViewModel
     {
         public List<Todo> Todos { get; }
+        
+        public List<Label> Labels { get; }
 
 
-        public TodosViewModel(Filter filter, List<Todo> todos)
+        public TodosViewModel(Filter filter, List<Todo> todos, List<Label> labels)
         {
+            Labels = labels;
             if (filter.FilterType == FilterType.ByStatus)
             {
                 var availableTodos = todos
