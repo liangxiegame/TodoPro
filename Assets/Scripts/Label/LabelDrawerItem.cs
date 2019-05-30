@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.UIWidgets.material;
@@ -18,8 +19,11 @@ namespace TodoProApp
                 {
                     return new ExpansionTile(
                         leading: new Icon(Icons.label),
-                        title: new Text($"标签 {model.Count}"),
-                        children: model.Select(label => new LabelRow(label) as Widget).ToList(),
+                        title: new Text("标签"),
+                        children: model.Select(label => new LabelRow(label, () =>
+                            {
+                                dispatcher.dispatch(new ApplyFilterAction(Filter.ByLabel(label)));
+                            }) as Widget).ToList(),
 
                         trailing: new IconButton(
                             icon: new Icon(Icons.add),
@@ -39,9 +43,12 @@ namespace TodoProApp
 
     class LabelRow : StatelessWidget
     {
-        public LabelRow(Label label)
+        private Action mOnClick;
+        
+        public LabelRow(Label label,Action onClick)
         {
             mLabel = label;
+            mOnClick = onClick;
         }
 
         private Label mLabel { get; }
@@ -63,7 +70,11 @@ namespace TodoProApp
                         color: Colors.black
                     )
                 ),
-                onTap: () => { Navigator.of(context).pop(); }
+                onTap: () =>
+                {
+                    mOnClick();
+                    Navigator.of(context).pop();
+                }
             );
         }
     }
