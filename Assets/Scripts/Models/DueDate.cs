@@ -26,5 +26,23 @@ namespace TodoProApp
 
             return "";
         }
+        
+        public static string ToTitle(this DueDate dueDate)
+        {
+            if (dueDate == DueDate.None)
+            {
+                return "无";
+            }
+            else if (dueDate == DueDate.Today)
+            {
+                return "今天";
+            }
+            else if (dueDate == DueDate.Next7Day)
+            {
+                return "一周内";
+            }
+
+            return "";
+        }
     }
 }

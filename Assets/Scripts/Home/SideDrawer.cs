@@ -32,7 +32,7 @@ namespace TodoProApp
                                     title: new Text("今天"),
                                     onTap: () =>
                                     {
-                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByToday()));
+                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByDueDate(DueDate.Today)));
                                         Navigator.pop(context);
                                     }
                                 ),
@@ -41,7 +41,7 @@ namespace TodoProApp
                                     title: new Text("一周内"),
                                     onTap: () =>
                                     {
-                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByWeek()));
+                                        dispatcher.dispatch(new ApplyFilterAction(Filter.ByDueDate(DueDate.Next7Day)));
                                         Navigator.pop(context);
                                     }
                                 ),

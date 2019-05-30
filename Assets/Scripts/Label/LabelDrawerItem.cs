@@ -32,11 +32,6 @@ namespace TodoProApp
                                 Navigator.of(context)
                                     .push(new MaterialPageRoute(buildContext1 => new LabelEditor()));
                             }));
-//                        onTap: () =>
-//                        {
-//                            Debug.Log("tag list");
-                    dispatcher.dispatch(new ApplyFilterAction(Filter.ByWeek()));
-//                        });
                 });
         }
     }

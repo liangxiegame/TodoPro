@@ -1,4 +1,5 @@
-﻿using QFramework.UIWidgets.ReduxPersist;
+﻿using System;
+using QFramework.UIWidgets.ReduxPersist;
 using Unity.UIWidgets;
 using Unity.UIWidgets.engine;
 using Unity.UIWidgets.material;
@@ -19,8 +20,20 @@ namespace TodoProApp
 
         protected override Widget createWidget()
         {
-            var store = new Store<AppState>(AppReducer.Reduce, 
-                AppState.Load(),
+            AppState initState = null;
+            
+//            try
+//            {
+                initState = AppState.Load();
+//            }
+//            catch (Exception e)
+//            {
+//                PlayerPrefs.DeleteKey("REDUX_PERISIST");
+//                initState = AppState.Load();
+//            }
+
+            var store = new Store<AppState>(AppReducer.Reduce,
+                initState,
                 ReduxPersistMiddleware.create<AppState>());
 
             return new StoreProvider<AppState>(store, child:

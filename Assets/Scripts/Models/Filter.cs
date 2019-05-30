@@ -1,11 +1,9 @@
 namespace TodoProApp
 {
-
     public enum FilterType
     {
         ByStatus,
-        ByToday, // 合并成 ByDueDate
-        ByWeek,  //
+        ByDueDate,
         ByLabel
     }
 
@@ -16,14 +14,14 @@ namespace TodoProApp
             if (status == TodoStatus.Pending)
             {
                 return "收件箱";
-            } else if (status == TodoStatus.Completed)
+            }
+            else if (status == TodoStatus.Completed)
             {
                 return "已完成";
             }
 
             return "";
         }
-        
     }
 
     /// <summary>
@@ -41,23 +39,15 @@ namespace TodoProApp
             };
         }
 
-        public static Filter ByToday()
+
+        public static Filter ByDueDate(DueDate dueDate)
         {
             return new Filter()
             {
-                Title = "今天",
+                Title = dueDate.ToTitle(),
                 TodoStatus = TodoStatus.Pending,
-                FilterType = FilterType.ByToday
-            };
-        }
-        
-        public static Filter ByWeek()
-        {
-            return new Filter()
-            {
-                Title = "一周内",
-                TodoStatus = TodoStatus.Pending,
-                FilterType = FilterType.ByWeek
+                DueDate = dueDate,
+                FilterType = FilterType.ByDueDate
             };
         }
 
@@ -73,11 +63,13 @@ namespace TodoProApp
         }
 
         public string Title;
-        
+
         public TodoStatus TodoStatus = TodoStatus.Pending;
 
         public Label Label;
 
         public FilterType FilterType;
+
+        public DueDate DueDate;
     }
 }
