@@ -35,7 +35,7 @@ namespace TodoProApp
                                 margin: EdgeInsets.symmetric(vertical: 2),
                                 decoration: new BoxDecoration(
                                     border: new Border(
-                                        left: new BorderSide(Color.black,
+                                        left: new BorderSide(Todo.Priority.ToColor(),
                                             width: 4f)
                                     )
                                 ),

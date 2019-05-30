@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UIWidgets.Runtime.material;
 using Unity.UIWidgets.material;
 using Unity.UIWidgets.painting;
 using Unity.UIWidgets.Redux;
 using Unity.UIWidgets.widgets;
-using UnityEditor.Animations;
-using UnityEngine;
+using Color = Unity.UIWidgets.ui.Color;
 using DialogUtils = Unity.UIWidgets.material.DialogUtils;
 
 namespace TodoProApp
@@ -53,6 +51,7 @@ namespace TodoProApp
         private string       mTodoTitle = "";
         private DueDate      mDueDate   = DueDate.None;
         private List<string> mLabels    = new List<string>();
+        private Priority     mPriority  = Priority.Priority4;
 
         public override void initState()
         {
@@ -61,6 +60,7 @@ namespace TodoProApp
             mTodoTitle = widget.Todo.Title;
             mDueDate = widget.Todo.DueDate;
             mLabels = widget.Todo.Labels;
+            mPriority = widget.Todo.Priority;
         }
 
         public override Widget build(BuildContext context)
@@ -103,7 +103,7 @@ namespace TodoProApp
 
                                 new ListTile(
                                     leading: new Icon(Icons.calendar_today),
-                                    title: new Text("Due Date"),
+                                    title: new Text("开始时间"),
                                     trailing: new DropdownButton<string>(
                                         value: mDueDate.ToText(),
                                         onChanged: newValue =>
@@ -138,14 +138,20 @@ namespace TodoProApp
                                 ),
                                 new ListTile(
                                     leading: new Icon(icon: Icons.label),
-                                    title: new Text("Labels"),
+                                    title: new Text("标签"),
                                     subtitle: mLabels.Count == 0
-                                        ? new Text("No Labels")
+                                        ? new Text("没有标签")
                                         : new Text(new Func<string>(() =>
                                         {
                                             return Utils.GetLabelString(mLabels, model.Labels);
                                         }).Invoke()),
                                     onTap: () => { ShowLabelsDialog(context); }
+                                ),
+                                new ListTile(
+                                    leading: new Icon(Icons.flag),
+                                    title: new Text("优先级"),
+                                    subtitle: new Text(mPriority.ToText()),
+                                    onTap: () => { ShowPriorityDialog(context); }
                                 )
                             }),
                         floatingActionButton:
@@ -160,6 +166,7 @@ namespace TodoProApp
                                     widget.Todo.Title = mTodoTitle;
                                     widget.Todo.DueDate = mDueDate;
                                     widget.Todo.Labels = mLabels;
+                                    widget.Todo.Priority = mPriority;
 
                                     if (widget.Mode == EditorMode.Creation)
                                     {
@@ -172,13 +179,11 @@ namespace TodoProApp
 
 
                                     Navigator.pop(context);
-                                    
                                 }
                             }
                         ));
                 });
         }
-
 
         void ShowLabelsDialog(BuildContext context)
         {
@@ -191,7 +196,7 @@ namespace TodoProApp
                         builder: (context1, model, dispatcher) =>
                         {
                             return new SimpleDialog(
-                                title: new Text("Select Labels"),
+                                title: new Text("选择标签"),
                                 children: model.Select(label =>
                                     {
                                         return new ListTile(
@@ -212,9 +217,8 @@ namespace TodoProApp
                                                 }
 
                                                 Navigator.pop(context);
-                                                
-                                                this.setState(()=>{});
 
+                                                this.setState(() => { });
                                             }
                                         ) as Widget;
                                     })
@@ -222,6 +226,62 @@ namespace TodoProApp
                         }
                     );
                 });
+        }
+
+        void ShowPriorityDialog(BuildContext context)
+        {
+            DialogUtils.showDialog(
+                context: context,
+                builder: buildContext =>
+                {
+                    return new StoreConnector<AppState, List<Label>>(
+                        converter: state => state.Labels,
+                        builder: (context1, model, dispatcher) =>
+                        {
+                            return new SimpleDialog(
+                                title: new Text("选择优先级"),
+                                children: new List<Widget>()
+                                {
+                                    PriorityItem(Priority.Priority1, context1),
+                                    PriorityItem(Priority.Priority2, context1),
+                                    PriorityItem(Priority.Priority3, context1),
+                                    PriorityItem(Priority.Priority4, context1)
+                                });
+                        }
+                    );
+                });
+        }
+
+        Widget PriorityItem(Priority priority, BuildContext context)
+        {
+            return new GestureDetector(
+                child: new Container(
+                    color: mPriority == priority ? Colors.grey : Color.white,
+                    child: new Container(
+                        margin: EdgeInsets.symmetric(2),
+                        decoration: new BoxDecoration(
+                            border: new Border(
+                                left: new BorderSide(
+                                    width: 6,
+                                    color: priority.ToColor()
+                                )
+                            )
+                        ),
+                        child: new Container(
+                            margin: EdgeInsets.all(12),
+                            child: new Text(priority.ToText(),
+                                style: new TextStyle(fontSize: 18)
+                            )
+                        )
+                    )
+                ),
+                onTap: () =>
+                {
+                    mPriority = priority;
+                    Navigator.pop(context);
+                    this.setState(() => { });
+                }
+            );
         }
     }
 }
