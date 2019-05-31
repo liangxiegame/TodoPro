@@ -3,7 +3,7 @@ using System.Text;
 
 namespace TodoProApp
 {
-    public class Utils
+    public static class Utils
     {
         public static string GetLabelString(List<string> labelIds, List<Label> labels)
         {
@@ -17,5 +17,18 @@ namespace TodoProApp
 
             return stringBuilder.ToString();
         }
+
+        public static string GetProjectName(string projectId,List<Project> projects)
+        {
+            var project = projects.Find(proj => proj.Id == projectId);
+
+            if (project != null)
+            {
+                return project.Name;
+            }
+
+            return "收件箱";
+        }
+        
     }
 }

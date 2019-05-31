@@ -4,7 +4,8 @@ namespace TodoProApp
     {
         ByStatus,
         ByDueDate,
-        ByLabel
+        ByLabel,
+        ByProject
     }
 
     public static class TodoStatusToTitle
@@ -62,11 +63,24 @@ namespace TodoProApp
             };
         }
 
+        public static Filter ByProject(Project project)
+        {
+            return new Filter()
+            {
+                Title = project.Name,
+                TodoStatus = TodoStatus.Pending,
+                FilterType = FilterType.ByProject,
+                Project = project
+            };
+        }
+
         public string Title;
 
         public TodoStatus TodoStatus = TodoStatus.Pending;
 
         public Label Label;
+
+        public Project Project;
 
         public FilterType FilterType;
 

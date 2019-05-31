@@ -22,5 +22,7 @@ namespace TodoProApp
         public Priority Priority = Priority.Priority4;
 
         public List<string> Labels = new List<string>();
+
+        public string ProjectId { get; set; } = "1";
     }
 }

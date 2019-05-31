@@ -45,6 +45,7 @@ namespace TodoProApp
                                         Navigator.pop(context);
                                     }
                                 ),
+                                new ProjectDrawerItem(),
                                 new LabelDrawerItem(),
                                 new ListTile(
                                     leading: new Icon(Icons.done),

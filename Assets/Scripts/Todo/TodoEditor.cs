@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UIWidgets.Runtime.material;
+using UIWidgetsGallery.gallery;
+using Unity.UIWidgets;
 using Unity.UIWidgets.material;
 using Unity.UIWidgets.painting;
 using Unity.UIWidgets.Redux;
@@ -52,6 +54,7 @@ namespace TodoProApp
         private DueDate      mDueDate   = DueDate.None;
         private List<string> mLabels    = new List<string>();
         private Priority     mPriority  = Priority.Priority4;
+        private string       mProjectId = "1";
 
         public override void initState()
         {
@@ -61,6 +64,7 @@ namespace TodoProApp
             mDueDate = widget.Todo.DueDate;
             mLabels = widget.Todo.Labels;
             mPriority = widget.Todo.Priority;
+            mProjectId = widget.Todo.ProjectId;
         }
 
         public override Widget build(BuildContext context)
@@ -100,7 +104,12 @@ namespace TodoProApp
                                         )
                                     )
                                 ),
-
+                                new ListTile(
+                                    leading: new Icon(icon: Icons.book),
+                                    title: new Text("项目"),
+                                    subtitle: new Text(Utils.GetProjectName(mProjectId,model.Projects)),
+                                    onTap: () => { ShowProjectDialog(context); }
+                                ),
                                 new ListTile(
                                     leading: new Icon(Icons.calendar_today),
                                     title: new Text("开始时间"),
@@ -167,6 +176,7 @@ namespace TodoProApp
                                     widget.Todo.DueDate = mDueDate;
                                     widget.Todo.Labels = mLabels;
                                     widget.Todo.Priority = mPriority;
+                                    widget.Todo.ProjectId = mProjectId;
 
                                     if (widget.Mode == EditorMode.Creation)
                                     {
@@ -184,6 +194,45 @@ namespace TodoProApp
                         ));
                 });
         }
+
+        void ShowProjectDialog(BuildContext context)
+        {
+            DialogUtils.showDialog(
+                context: context,
+                builder: buildContext =>
+                {
+                    return new StoreConnector<AppState, List<Project>>(
+                        converter: state => state.Projects,
+                        builder: (context1, model, dispatcher) =>
+                        {
+                            return new SimpleDialog(
+                                title: new Text("选择项目"),
+                                children: BuildProjectItem(model, dispatcher, context));
+                        }
+                    );
+                });
+        }
+
+        List<Widget> BuildProjectItem(List<Project> projects, Dispatcher dispatcher, BuildContext context)
+        {
+            return projects.Select(project => new ListTile(
+                leading: new Container(
+                    width: 12,
+                    height: 12,
+                    child: new CircleAvatar(
+                        backgroundColor: Color.black
+                    )),
+                title: new Text(project.Name),
+                onTap: () =>
+                {
+                    mProjectId = project.Id;
+
+                    Navigator.pop(context);
+                    setState(() => { });
+                }
+            ) as Widget).ToList();
+        }
+
 
         void ShowLabelsDialog(BuildContext context)
         {

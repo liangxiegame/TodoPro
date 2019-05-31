@@ -64,5 +64,15 @@ namespace TodoProApp
 
         public Label Label { get; }
     }
+
+    public class AddProjectAction
+    {
+        public Project Project { get; }
+        
+        public AddProjectAction(Project project)
+        {
+            Project = project;
+        }
+    }
     
 }

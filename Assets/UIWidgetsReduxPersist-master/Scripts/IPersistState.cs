@@ -7,19 +7,28 @@ namespace QFramework.UIWidgets.ReduxPersist
     {
         private const string KEY = "REDUX_PERISIST";
 
+        public virtual void OnLoaded()
+        {
+            
+        }
+        
         public static T Load()
         {
             var jsonContent = PlayerPrefs.GetString(KEY);
 
+            T retModel = null;
             if (string.IsNullOrWhiteSpace(jsonContent))
             {
-                return new T();
+                retModel = new T();
             }
             else
             {
-                return JsonConvert.DeserializeObject<T>(jsonContent);
+                retModel = JsonConvert.DeserializeObject<T>(jsonContent);
             }
+            
+            retModel.OnLoaded();
 
+            return retModel;
         }
 
         public void Save()

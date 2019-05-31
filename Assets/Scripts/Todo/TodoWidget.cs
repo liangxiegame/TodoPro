@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UIWidgetsGallery.gallery;
 using Unity.UIWidgets;
 using Unity.UIWidgets.material;
 using Unity.UIWidgets.painting;
@@ -15,11 +16,14 @@ namespace TodoProApp
 
         public List<Label> Labels { get; }
 
-        public TodoWidget(Todo todo, Dispatcher dispatcher, List<Label> labels)
+        public List<Project> Projects { get; }
+
+        public TodoWidget(Todo todo, Dispatcher dispatcher, List<Label> labels, List<Project> projects)
         {
             this.Todo = todo;
             this.Dispatcher = dispatcher;
             Labels = labels;
+            Projects = projects;
         }
 
         public override Widget build(BuildContext context)
@@ -73,6 +77,35 @@ namespace TodoProApp
                                                             style: new TextStyle(
                                                                 color: Colors.grey,
                                                                 fontSize: 12
+                                                            )
+                                                        ),
+                                                        new Expanded(
+                                                            child: new Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                                children: new List<Widget>()
+                                                                {
+                                                                    new Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                                        children: new List<Widget>()
+                                                                        {
+                                                                            new Text(Utils.GetProjectName(
+                                                                                    Todo.ProjectId, Projects),
+                                                                                style: new TextStyle(
+                                                                                    fontSize: 14,
+                                                                                    color: Colors.grey
+                                                                                )
+                                                                            ),
+                                                                            new Container(
+                                                                                margin:EdgeInsets.symmetric(horizontal:8),
+                                                                                width:8,
+                                                                                height:8,
+                                                                                child:new CircleAvatar(
+                                                                                    backgroundColor:Colors.black    
+                                                                                    )
+                                                                                )
+                                                                        }
+                                                                    )
+                                                                }
                                                             )
                                                         )
                                                     }

@@ -24,6 +24,10 @@ namespace TodoProApp
                 case AddLabelAction addLabelAction:
                     state.Labels.Add(addLabelAction.Label);
                     return state;
+                
+                case AddProjectAction addProjectAction:
+                    state.Projects.Add(addProjectAction.Project);
+                    return state;
             }
 
             return state;
