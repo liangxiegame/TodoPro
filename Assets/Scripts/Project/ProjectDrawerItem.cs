@@ -5,6 +5,7 @@ using UIWidgetsGallery.gallery;
 using Unity.UIWidgets;
 using Unity.UIWidgets.material;
 using Unity.UIWidgets.Redux;
+using Unity.UIWidgets.ui;
 using Unity.UIWidgets.widgets;
 
 namespace TodoProApp
@@ -69,7 +70,7 @@ namespace TodoProApp
                     width: 10,
                     height: 10,
                     child: new CircleAvatar(
-                        backgroundColor: Colors.purple
+                        backgroundColor: new Color(ColorObject.Presets[mProject.ColorIndex].Value)
                     )
                 ),
                 onTap: () =>

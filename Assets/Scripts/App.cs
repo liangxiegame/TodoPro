@@ -1,5 +1,4 @@
-﻿using System;
-using QFramework.UIWidgets.ReduxPersist;
+﻿using QFramework.UIWidgets.ReduxPersist;
 using Unity.UIWidgets;
 using Unity.UIWidgets.engine;
 using Unity.UIWidgets.material;
@@ -7,6 +6,7 @@ using Unity.UIWidgets.Redux;
 using Unity.UIWidgets.ui;
 using Unity.UIWidgets.widgets;
 using UnityEngine;
+using Color = Unity.UIWidgets.ui.Color;
 
 namespace TodoProApp
 {
@@ -38,6 +38,9 @@ namespace TodoProApp
 
             return new StoreProvider<AppState>(store, child:
                 new MaterialApp(
+                    theme:new ThemeData(
+                        accentColor:Colors.orange,primaryColor:new Color(0xFFDE4435)
+                        ),
                     home: new Home()
                 )
             );

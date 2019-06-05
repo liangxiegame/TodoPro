@@ -1,15 +1,24 @@
 using System.Collections.Generic;
+using System.Linq;
 using UIWidgets.Runtime.material;
+using UIWidgetsGallery.gallery;
 using Unity.UIWidgets.material;
 using Unity.UIWidgets.painting;
 using Unity.UIWidgets.Redux;
+using Unity.UIWidgets.ui;
 using Unity.UIWidgets.widgets;
-using UnityEngine;
 
 namespace TodoProApp
 {
-    public class LabelEditor : StatelessWidget
+    public class LabelEditor : StatefulWidget
     {
+        public override State createState()
+        {
+            return new LabelEditorState();
+        }
+    }
+
+    class LabelEditorState : State<LabelEditor> {
         GlobalKey<FormState> mFormState = GlobalKey<FormState>.key();
 
         Label mLabel = new Label();
@@ -67,11 +76,34 @@ namespace TodoProApp
                             )
                         ),
                         new Padding(
-                            padding: EdgeInsets.all(4),
-                            child: new Container(
-                                height: 80,
-                                color: Colors.black
-                            )
+                            padding: EdgeInsets.only(top: 4),
+                            child: new ExpansionTile(
+                                leading: new Container(
+                                    width: 12,
+                                    height: 12,
+                                    child: new CircleAvatar(
+                                        backgroundColor: new Color(ColorObject.Presets[mLabel.ColorIndex].Value)
+                                    )
+                                ),
+                                title: new Text(ColorObject.Presets[mLabel.ColorIndex].Name),
+                                children: ColorObject.Presets.Select(
+                                    colorObj => new ListTile(
+                                        leading: new Container(
+                                            width: 12,
+                                            height: 12,
+                                            child: new CircleAvatar(
+                                                backgroundColor: new Color(colorObj.Value)
+                                            )),
+                                        title: new Text(colorObj.Name),
+                                        onTap: () =>
+                                        {
+                                            this.setState(() =>
+                                            {
+                                                var colorIndex = ColorObject.Presets.IndexOf(colorObj);
+                                                mLabel.ColorIndex = colorIndex;
+                                            });
+                                        }
+                                    ) as Widget).ToList())
                         )
                     }
                 )

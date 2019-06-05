@@ -72,7 +72,7 @@ namespace TodoProApp
                     child: new Icon(
                         icon: Icons.label,
                         size: 16,
-                        color: Colors.black
+                        color: mLabel.GetColor()
                     )
                 ),
                 onTap: () =>

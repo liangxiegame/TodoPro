@@ -220,7 +220,7 @@ namespace TodoProApp
                     width: 12,
                     height: 12,
                     child: new CircleAvatar(
-                        backgroundColor: Color.black
+                        backgroundColor: project.GetColor()
                     )),
                 title: new Text(project.Name),
                 onTap: () =>
@@ -249,7 +249,7 @@ namespace TodoProApp
                                 children: model.Select(label =>
                                     {
                                         return new ListTile(
-                                            leading: new Icon(icon: Icons.label, size: 18, color: Colors.black),
+                                            leading: new Icon(icon: Icons.label, size: 18, color: label.GetColor()),
                                             title: new Text(label.Name),
                                             trailing: mLabels.Any(id => id == label.Id)
                                                 ? new Icon(icon: Icons.close) as Widget

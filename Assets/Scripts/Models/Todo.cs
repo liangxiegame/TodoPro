@@ -25,4 +25,14 @@ namespace TodoProApp
 
         public string ProjectId { get; set; } = "1";
     }
+
+    public static class TodoExtension
+    {
+        public static Project GetProject(this Todo todo, List<Project> projects)
+        {
+            var project = projects.Find(proj => proj.Id == todo.ProjectId);
+
+            return project;
+        }
+    }
 }

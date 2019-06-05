@@ -96,13 +96,15 @@ namespace TodoProApp
                                                                                 )
                                                                             ),
                                                                             new Container(
-                                                                                margin:EdgeInsets.symmetric(horizontal:8),
-                                                                                width:8,
-                                                                                height:8,
-                                                                                child:new CircleAvatar(
-                                                                                    backgroundColor:Colors.black    
-                                                                                    )
+                                                                                margin: EdgeInsets.symmetric(
+                                                                                    horizontal: 8),
+                                                                                width: 8,
+                                                                                height: 8,
+                                                                                child: new CircleAvatar(
+                                                                                    backgroundColor: Todo
+                                                                                        .GetProject(Projects).GetColor()
                                                                                 )
+                                                                            )
                                                                         }
                                                                     )
                                                                 }
@@ -141,14 +143,22 @@ namespace TodoProApp
                 ),
                 onDismissed: direction =>
                 {
+                    var message = string.Empty;
+
                     if (direction == DismissDirection.startToEnd)
                     {
                         Dispatcher.dispatch(new RemoveTodoAction(Todo));
+                        message = $"任务 {Todo.Title} 已删除";
                     }
                     else if (direction == DismissDirection.endToStart)
                     {
                         Dispatcher.dispatch(new CompleteTodoAction(Todo));
+                        message = $"任务 {Todo.Title} 已完成";
                     }
+
+                    var snackBar = new SnackBar(content: new Text(message));
+
+                    Scaffold.of(context).showSnackBar(snackBar);
                 });
         }
     }
